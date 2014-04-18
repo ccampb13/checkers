@@ -2,10 +2,23 @@ doctype html
 html(lang='en')
   head
     meta(charset='utf-8')
-    title Client Template
-    link(rel='stylesheet', href='./css/app.css')
+    title Checkers
+    link(rel='stylesheet', href='css/app.css')
   body
-    h1 Client Template
+    #container
+      h1 Checkers
+      button#start Start Game
 
-    script(src='./js/vendor/jquery-2.1.0.js')
-    script(src='./js/source/main.js')
+      table#board
+          tbody
+            -for(var i = 0; i < 8; i++)
+              tr
+                -for(var j = 0; j < 8; j++)
+                  td.square(data-x=j, data-y=i)
+
+
+
+
+
+    script(src='js/vendor/jquery-2.1.0.js')
+    script(src='js/source/main.js')
