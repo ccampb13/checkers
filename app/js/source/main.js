@@ -14,7 +14,6 @@
   var originX = null;
   var originY = null;
 
-
   var destinationX = null;
   var destinationY= null;
 
@@ -40,8 +39,51 @@
 
 }
 
+  // function appleKing(){
+  //   if(originY ===7){
+  //     selectedPiece.removeClass('player1 selectedPiece checker current');
+  //     selectedPlace.addClass('player1 selectedPiece appleKing checker current');
+  //     }
+  // }
+
+  function appleTurn(){
+    if((originX + 1 === destinationX || originX -1 === destinationX) && originY + 1 === destinationY){
+      selectedPiece.removeClass('player1 checker selectedPiece current');
+      selectedPlace.addClass('player1 checker current');
+    } else if ((originX + 2 === destinationX && originY + 2 === destinationY) && adjacentBR.hasClass('player2 checker')) {
+      selectedPiece.removeClass('player1 selectedPiece checker current');
+      selectedPlace.addClass('player1 checker current');
+      adjacentBR.removeClass('player2 checker');
+    } else if ((originX - 2 === destinationX && originY + 2 === destinationY) && adjacentBL.hasClass('player2 checker')) {
+      selectedPiece.removeClass('player1 selectedPiece checker current');
+      selectedPlace.addClass('player1 checker current');
+      adjacentBR.removeClass('player2 checker');
+    } else {
+      return;
+    }
+
+  }
+
+  function windowsTurn(){
+    if((originX + 1 === destinationX || originX  -1 === destinationX) && originY - 1 === destinationY){
+      selectedPiece.removeClass('player2 checker selectedPiece current');
+      selectedPlace.addClass('player2 checker current');
+    } else if ((originX + 2 === destinationX && originY - 2 === destinationY) && adjacentTR.hasClass('player1 checker')) {
+      selectedPiece.removeClass('player2 selectedPiece checker current');
+      selectedPlace.addClass('player2 checker current');
+      adjacentTR.removeClass('player1 checker');
+    } else if ((originX - 2 === destinationX && originY - 2 === destinationY) && adjacentTL.hasClass('player1 checker')) {
+      selectedPiece.removeClass('player2 selectedPiece checker current');
+      selectedPlace.addClass('player2 checker current');
+      adjacentTL.removeClass('player1 checker');
+    } else {
+      return;
+      }
+  }
+
+
   function selectPlace(){
-    if(possible !== true){
+    if(!possible){
       console.log('You did not select a checker');
       return;
     } else {
@@ -49,40 +91,12 @@
     destinationX = $(selectedPlace).data('x');
     destinationY = $(selectedPlace).data('y');
     console.log('you moved a checker');
-    console.log('The coordinates of the new space are ' + destinationX + ',' + destinationY);
   }
 
     if(turn > 0) {
-      if((originX + 1 === destinationX || originX -1 === destinationX) && originY + 1 === destinationY){
-        selectedPiece.removeClass('player1 checker selectedPiece current');
-        $(this).addClass('player1 checker current');
-      } else if ((originX + 2 === destinationX && originY + 2 === destinationY) && adjacentBR.hasClass('player2 checker')) {
-        selectedPiece.removeClass('player1 selectedPiece checker current');
-        selectedPlace.addClass('player1 checker current');
-        adjacentBR.removeClass('player2 checker');
-      } else if ((originX - 2 === destinationX && originY + 2 === destinationY) && adjacentBL.hasClass('player2 checker')) {
-        selectedPiece.removeClass('player1 selectedPiece checker current');
-        selectedPlace.addClass('player1 checker current');
-        adjacentBR.removeClass('player2 checker');
-      } else {
-        return;
-      }
-
-  } else if (turn < 0){
-      if((originX + 1 === destinationX || originX  -1 === destinationX) && originY - 1 === destinationY){
-        selectedPiece.removeClass('player2 checker selectedPiece current');
-        $(this).addClass('player2 checker current');
-      } else if ((originX + 2 === destinationX && originY - 2 === destinationY) && adjacentTR.hasClass('player1 checker')) {
-        selectedPiece.removeClass('player2 selectedPiece checker current');
-        selectedPlace.addClass('player2 checker current');
-        adjacentTR.removeClass('player1 checker');
-      } else if ((originX - 2 === destinationX && originY - 2 === destinationY) && adjacentTL.hasClass('player1 checker')) {
-        selectedPiece.removeClass('player2 selectedPiece checker current');
-        selectedPlace.addClass('player2 checker current');
-        adjacentTL.removeClass('player1 checker');
-      } else {
-        return;
-        }
+      appleTurn();
+    } else if(turn < 0){
+      windowsTurn();
     }
     possible = false;
 
@@ -90,6 +104,8 @@
     turn *= -1;
     console.log(turn);
   }
+
+
 
   function switchPlayer(){
     $('.player1').toggleClass('current');
