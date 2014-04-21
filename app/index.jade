@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Checkers
+    link(rel='stylesheet', href='css/app.css')
+  body
+    #container
+      h1 Checkers
+      center
+        button#start Start Game
+
+        table#board
+            tbody
+              -for(var i = 0; i < 8; i++)
+                tr
+                  -for(var j = 0; j < 8; j++)
+                    td.square(data-x=j, data-y=i)
+
+
+
+
+
+    script(src='js/vendor/jquery-2.1.0.js')
+    script(src='js/source/main.js')
